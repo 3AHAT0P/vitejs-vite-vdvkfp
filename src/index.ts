@@ -78,11 +78,11 @@ const line = (
   };
 };
 
-const loadTileset = async () => {
-  const tileset = await import('./terrain.tileset.json');
+export const loadTileset = async () => {
+  const tileset = await import('./assets/terrain.tileset.json');
   console.log(tileset);
   const tilesetImage = new Image();
-  tilesetImage.src = tileset.image;
+  tilesetImage.src = `./assets/${tileset.image}`;
   await new Promise((resolve, reject) => {
     tilesetImage.onload = resolve;
     tilesetImage.onerror = reject;
@@ -90,5 +90,3 @@ const loadTileset = async () => {
   console.log('123123');
   createImageBitmap(tilesetImage);
 };
-
-loadTileset();
