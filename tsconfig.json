@@ -13,8 +13,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
+    "baseUrl": "src",
     "paths": {
-      "@assets": ["./src/assets"]
+      "@": ["./"],
+      "@assets": ["./assets"]
     }
   },
   "include": ["src"]
