@@ -1,11 +1,14 @@
 import './style.css';
-import { loadTileset } from './index';
+import {} from './index';
+import { loadTileset } from './VirtualTree/index';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`;
+const canvas = document.createElement('canvas');
+canvas.setAttribute('id', 'scene');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const ctx = canvas.getContext('2d');
 
 loadTileset();
