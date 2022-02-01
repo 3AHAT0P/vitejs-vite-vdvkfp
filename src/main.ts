@@ -12,7 +12,9 @@ canvas.height = window.innerHeight;
 app.appendChild(canvas);
 
 const ctx = canvas.getContext('2d');
-if (ctx == null) throw new Error('!!!!!!!!');
+if (ctx == null) throw new Error('WTF? CTX is null');
+
+ctx.imageSmoothingEnabled = false;
 
 const renderTile = async (ctx, tileset, tileId, x, y) => {
   const row = Math.trunc(tileId / tileset.columns);
