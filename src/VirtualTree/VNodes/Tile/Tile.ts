@@ -1,47 +1,61 @@
 import { Size } from '../../@types/Size';
 import { Position } from '../../@types/Position';
 import { VNode } from '../../@types/VNode';
-import { imageLoader } from '../../../services/ImageLoader';
+import { beforeRender } from '../../index';
+import { tilesetLoader } from '../../../services/TilesetLoader';
 
 export interface VNodeTile extends VNode {
   type: 'tile';
-  source: string;
-  sourcePosition: Position;
-  sourceSize: Size;
+  tileId: number;
+  bitmap?: ImageBitmap;
   position: Position;
   size: Size;
 }
 
 export type TileOptions = {
-  source: string;
-  sourcePosition: Position;
+  tilesetPath: string;
+  tileId: number;
   sourceSize?: Size;
   position: Position;
   size: Size;
 };
 
-export const Tile = async (
-  { source, sourcePosition, sourceSize, position, size }: TileOptions,
-  children: VNode[],
-): Promise<VNodeTile> => {
-  imageLoader
-  const source = await options.deps.imageLoader.load(node.source);
-  ctx.save();
-  const bitmap = await createImageBitmap(
-    node.source,
-    node.sourcePosition.x,
-    node.sourcePosition.y,
-    node.sourceSize.x,
-    node.sourceSize.y,
-  );
+const idToPoint = (
+  tileId: number,
+  columnsNumber: number,
+  size: { x: number; y: number }
+): { x: number; y: number } => {
+  const y = Math.trunc(tileId / columnsNumber);
+  const x = tileId - y * columnsNumber;
 
-  return {
+  return { x: x * size.x, y: y * size.y };
+};
+
+export const Tile = (
+  { tilesetPath, tileId, position, size }: TileOptions,
+  children: VNode[]
+): VNodeTile => {
+  const node: VNodeTile = {
     type: 'tile',
-    source,
-    sourcePosition,
-    sourceSize: sourceSize ?? size,
+    tileId,
     position,
     size,
     children,
   };
+  beforeRender(async () => {
+    const tileset = await tilesetLoader.load(tilesetPath);
+    const tilePosition = idToPoint(tileId, tileset.columns, {
+      x: tileset.tilewidth,
+      y: tileset.tileheight,
+    });
+    node.bitmap = await createImageBitmap(
+      tileset.source,
+      tilePosition.x,
+      tilePosition.y,
+      tileset.tilewidth,
+      tileset.tileheight
+    );
+  });
+
+  return node;
 };

@@ -2,9 +2,19 @@ import type { Registerer } from '../../@types/Registerer';
 
 import type { VNodeTile } from './Tile';
 
-const tileRenderer = async (ctx: CanvasRenderingContext2D, node: VNodeTile) => {
+export const tileRenderer = async (
+  ctx: CanvasRenderingContext2D,
+  node: VNodeTile
+) => {
+  if (node.bitmap == null) throw new Error('Bitmap is null');
   ctx.save();
-  ctx.drawImage(bitmap, node.position.x, node.position.y);
+  ctx.drawImage(
+    node.bitmap,
+    node.position.x,
+    node.position.y,
+    node.size.x,
+    node.size.y
+  );
   ctx.restore();
 };
 

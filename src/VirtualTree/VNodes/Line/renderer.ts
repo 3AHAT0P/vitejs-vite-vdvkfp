@@ -7,8 +7,8 @@ const lineRenderer = (ctx: CanvasRenderingContext2D, node: VNodeLine) => {
   ctx.beginPath();
   ctx.moveTo(node.from.x, node.from.y);
   ctx.lineTo(node.to.x, node.to.y);
-  if (node.color != null) ctx.fillStyle = node.color;
-  ctx.fill();
+  if (node.color != null) ctx.strokeStyle = node.color;
+  ctx.stroke();
   ctx.closePath();
   ctx.restore();
 };

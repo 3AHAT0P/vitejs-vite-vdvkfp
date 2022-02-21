@@ -1,6 +1,10 @@
 import './style.css';
 import {} from './index';
-import { loadTileset } from './VirtualTree/index';
+import { renderTree } from './VirtualTree/index';
+import { Tile } from './VirtualTree/VNodes/Tile/Tile';
+import { Wrapper } from './VirtualTree/VNodes/Wrapper/Wrapper';
+import { Line } from './VirtualTree/VNodes/Line/Line';
+import { VNode } from './VirtualTree/@types/VNode';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -16,36 +20,145 @@ if (ctx == null) throw new Error('WTF? CTX is null');
 
 ctx.imageSmoothingEnabled = false;
 
-const renderTile = async (ctx, tileset, tileId, x, y) => {
-  const row = Math.trunc(tileId / tileset.columns);
-  const col = tileId - row * tileset.columns;
-  const bitmap = await createImageBitmap(
-    tileset.source,
-    col * tileset.tilewidth,
-    row * tileset.tileheight,
-    tileset.tilewidth,
-    tileset.tileheight
-  );
+// const main = async () => {
+//   let index = 0;
 
-  ctx.drawImage(bitmap, x, y);
+//   const tree = Wrapper({}, [
+//     Line(
+//       {
+//         from: { type: 'absolute', x: 4, y: 4 },
+//         to: { type: 'absolute', x: 300, y: 4 },
+//         color: 'red',
+//       },
+//       []
+//     ),
+//     Line(
+//       {
+//         from: { type: 'absolute', x: 300, y: 4 },
+//         to: { type: 'absolute', x: 300, y: 300 },
+//         color: 'red',
+//       },
+//       []
+//     ),
+//     Line(
+//       {
+//         from: { type: 'absolute', x: 300, y: 300 },
+//         to: { type: 'absolute', x: 4, y: 300 },
+//         color: 'red',
+//       },
+//       []
+//     ),
+//     Line(
+//       {
+//         from: { type: 'absolute', x: 4, y: 300 },
+//         to: { type: 'absolute', x: 4, y: 4 },
+//         color: 'red',
+//       },
+//       []
+//     ),
+//     Tile(
+//       {
+//         tilesetPath: 'terrain',
+//         tileId: 190,
+//         position: { type: 'absolute', x: 32 * ++index, y: 16 },
+//         size: { x: 32, y: 32 },
+//       },
+//       []
+//     ),
+//     Tile(
+//       {
+//         tilesetPath: 'terrain',
+//         tileId: 191,
+//         position: { type: 'absolute', x: 32 * ++index, y: 16 },
+//         size: { x: 32, y: 32 },
+//       },
+//       []
+//     ),
+//     Tile(
+//       {
+//         tilesetPath: 'terrain',
+//         tileId: 192,
+//         position: { type: 'absolute', x: 32 * ++index, y: 16 },
+//         size: { x: 32, y: 32 },
+//       },
+//       []
+//     ),
+//     Tile(
+//       {
+//         tilesetPath: 'terrain',
+//         tileId: 193,
+//         position: { type: 'absolute', x: 32 * ++index, y: 16 },
+//         size: { x: 32, y: 32 },
+//       },
+//       []
+//     ),
+//     Tile(
+//       {
+//         tilesetPath: 'terrain',
+//         tileId: 194,
+//         position: { type: 'absolute', x: 32 * ++index, y: 16 },
+//         size: { x: 32, y: 32 },
+//       },
+//       []
+//     ),
+//   ]);
+
+//   await renderTree(ctx, tree);
+// };
+
+interface FactoryTreeNode {
+  factory(options: any, children: VNode[]): VNode;
+  options: any;
+  children: FactoryTreeNode[];
+}
+
+const Node = <
+  T extends VNode,
+  G extends (options: any, children: VNode[]) => T
+>(
+  factory: G,
+  options: Parameters<G>[0],
+  children: FactoryTreeNode[]
+): FactoryTreeNode => {
+  return { factory, options, children };
 };
 
+const buildTree = async (node: FactoryTreeNode) => {};
+
 const main = async () => {
-  const tileset = await loadTileset('terrain');
-
-  const tileId = 190;
-
   let index = 0;
-  renderTile(ctx, tileset, 190, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 191, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 192, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 193, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 194, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 1, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 2, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 3, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 4, 16 * ++index, 16 * ++index);
-  renderTile(ctx, tileset, 5, 16 * ++index, 16 * ++index);
+
+  const firstLine = <const>{
+    from: { type: 'absolute', x: 4, y: 4 },
+    to: { type: 'absolute', x: 300, y: 4 },
+    color: 'red',
+  };
+  const secondLine = <const>{
+    from: { type: 'absolute', x: 300, y: 4 },
+    to: { type: 'absolute', x: 300, y: 300 },
+    color: 'red',
+  };
+  const thirdLine = <const>{
+    from: { type: 'absolute', x: 300, y: 300 },
+    to: { type: 'absolute', x: 4, y: 300 },
+    color: 'red',
+  };
+  const fourthLine = <const>{
+    from: { type: 'absolute', x: 4, y: 300 },
+    to: { type: 'absolute', x: 4, y: 4 },
+    color: 'red',
+  };
+
+  const factoryTree = Node(Wrapper, {}, [
+    Node(Line, firstLine, []),
+    Node(Line, secondLine, []),
+    Node(Line, thirdLine, []),
+    Node(Line, fourthLine, []),
+  ]);
+
+  const tree = await buildTree(factoryTree);
+
+  await renderTree(ctx, tree);
 };
 
 main();
