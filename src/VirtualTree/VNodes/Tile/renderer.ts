@@ -1,10 +1,11 @@
 import type { Registerer } from '../../@types/Registerer';
+import { buildAbsolutePosition } from '@/VirtualTree';
 
-import type { VNodeTile } from './Tile';
+import type { VTile } from './Tile';
 
 export const tileRenderer = async (
   ctx: CanvasRenderingContext2D,
-  node: VNodeTile
+  node: VTile
 ) => {
   if (node.bitmap == null) throw new Error('Bitmap is null');
   ctx.save();

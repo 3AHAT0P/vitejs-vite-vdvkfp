@@ -1,11 +1,17 @@
-import { Color } from '../../@types/Color';
-import { Position } from '../../@types/Position';
-import { Border } from '../../@types/Border';
-import { VNode } from '../../@types/VNode';
+import {
+  VComponent,
+  Color,
+  AbsolutePosition,
+  Position,
+  Border,
+  BoundingRect,
+} from 'VirtualTree/@types';
 
-export interface VNodeCircle extends VNode {
+import { buildAbsolutePosition } from '@/VirtualTree';
+
+export interface VCircle extends VComponent {
   type: 'circle';
-  position: Position;
+  position: AbsolutePosition;
   radius: number;
   color?: Color;
   border?: Border;
@@ -20,14 +26,13 @@ export type CircleOptions = {
 
 export const Circle = (
   { position, radius, color, border }: CircleOptions,
-  children: VNode[]
-): VNodeCircle => {
+  parentBoundingRect: BoundingRect
+): VCircle => {
   return {
     type: 'circle',
-    position,
+    position: buildAbsolutePosition(position, parentBoundingRect),
     radius,
     color,
     border,
-    children,
   };
 };

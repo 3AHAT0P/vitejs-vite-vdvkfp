@@ -1,10 +1,9 @@
-import { Size } from '../../@types/Size';
-import { Position } from '../../@types/Position';
-import { VNode } from '../../@types/VNode';
+import { VComponent, Position, Size, BoundingRect } from 'VirtualTree/@types';
+
 import { beforeRender } from '../../index';
 import { tilesetLoader } from '../../../services/TilesetLoader';
 
-export interface VNodeTile extends VNode {
+export interface VTile extends VComponent {
   type: 'tile';
   tileId: number;
   bitmap?: ImageBitmap;
@@ -33,14 +32,13 @@ const idToPoint = (
 
 export const Tile = (
   { tilesetPath, tileId, position, size }: TileOptions,
-  children: VNode[]
-): VNodeTile => {
-  const node: VNodeTile = {
+  parentBoundingRect: BoundingRect
+): VTile => {
+  const node: VTile = {
     type: 'tile',
     tileId,
     position,
     size,
-    children,
   };
   beforeRender(async () => {
     const tileset = await tilesetLoader.load(tilesetPath);

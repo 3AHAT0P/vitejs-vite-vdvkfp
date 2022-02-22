@@ -1,11 +1,16 @@
-import { Color } from '../../@types/Color';
-import { Position } from '../../@types/Position';
-import { VNode } from '../../@types/VNode';
+import {
+  VComponent,
+  Color,
+  AbsolutePosition,
+  Position,
+  BoundingRect,
+} from 'VirtualTree/@types';
+import { buildAbsolutePosition } from '@/VirtualTree';
 
-export interface VNodeLine extends VNode {
+export interface VLine extends VComponent {
   type: 'line';
-  from: Position;
-  to: Position;
+  from: AbsolutePosition;
+  to: AbsolutePosition;
   color?: Color;
 }
 
@@ -17,13 +22,12 @@ export type LineOptions = {
 
 export const Line = (
   { from, to, color }: LineOptions,
-  children: VNode[]
-): VNodeLine => {
+  parentBoundingRect: BoundingRect
+): VLine => {
   return {
     type: 'line',
-    from,
-    to,
+    from: buildAbsolutePosition(from, parentBoundingRect),
+    to: buildAbsolutePosition(to, parentBoundingRect),
     color,
-    children,
   };
 };

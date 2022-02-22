@@ -123,7 +123,23 @@ const Node = <
   return { factory, options, children };
 };
 
-const buildTree = async (node: FactoryTreeNode) => {};
+const buildTree = async (root: FactoryTreeNode, canvasBoundingRect) => {
+  const queue = [root];
+  root.factory(root.options, canvasBoundingRect, root.children)
+  while (queue.length > 0) {
+    const node = queue.shift();
+    if (node == null) break;
+    if (node.children?.length > 0) queue.push(...node.children);
+    const boundingRect = {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+      zIndex: 0,
+    };
+    node.factory(node.options)
+  }
+};
 
 const main = async () => {
   let index = 0;

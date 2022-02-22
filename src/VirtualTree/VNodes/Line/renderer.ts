@@ -1,8 +1,8 @@
-import type { Registerer } from '../../@types/Registerer';
+import type { Registerer } from '../../@types';
 
-import type { VNodeLine } from './Line';
+import type { VLine } from './Line';
 
-const lineRenderer = (ctx: CanvasRenderingContext2D, node: VNodeLine) => {
+const lineRenderer = (ctx: CanvasRenderingContext2D, node: VLine) => {
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(node.from.x, node.from.y);

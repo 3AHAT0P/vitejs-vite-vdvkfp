@@ -1,8 +1,8 @@
 import type { Registerer } from '../../@types/Registerer';
 
-import type { VNodeCircle } from './Circle';
+import type { VCircle } from './Circle';
 
-const circleRenderer = (ctx: CanvasRenderingContext2D, node: VNodeCircle) => {
+const circleRenderer = (ctx: CanvasRenderingContext2D, node: VCircle) => {
   ctx.save();
   ctx.beginPath();
   ctx.arc(node.position.x, node.position.y, node.radius, 0, 360);
