@@ -28,7 +28,7 @@ export const addNode = <
   return { componentInfo: componentInfo as any, options, children };
 }
 
-export const buildTree = async (root: FactoryTreeNode, canvasBoundingRect: BoundingRect) => {
+export const buildTree = (root: FactoryTreeNode, canvasBoundingRect: BoundingRect) => {
   const queue = [root];
 
   root.vNode = {
