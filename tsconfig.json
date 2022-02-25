@@ -13,10 +13,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
-      "@": ["./"],
-      "@assets": ["./assets"]
+      "@/*": ["./*"],
+      "@assets": ["./assets"],
+      "@assets/*": [
+        "./assets/*"
+      ],
+      "@VirtualTree": ["./VirtualTree"],
+      "@VirtualTree/*": [
+        "./VirtualTree/*"
+      ]
     }
   },
   "include": ["src"]

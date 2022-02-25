@@ -1,4 +1,5 @@
 export * from './Border';
+export * from './ComponentInfo';
 export * from './BoundingRect';
 export * from './Color';
 export * from './Position';

@@ -8,8 +8,8 @@ export interface RelativePosition {
   type: 'relative';
   x: number;
   y: number;
-  // outerAnchorX?: 'start' | 'center' | 'end';
-  // outerAnchorY?: 'start' | 'center' | 'end';
+  outerAnchorX?: 'start' | 'center' | 'end';
+  outerAnchorY?: 'start' | 'center' | 'end';
   // innerAnchorX?: 'start' | 'center' | 'end';
   // innerAnchorY?: 'start' | 'center' | 'end';
 }

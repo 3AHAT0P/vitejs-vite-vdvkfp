@@ -1,12 +1,12 @@
-import { VNode } from './VNode';
+import { VComponent } from './VNode';
 
 export interface RendererOptions {
   deps: {};
 }
 
-export type Renderer<TVNode extends VNode> = (
+export type Renderer<TVComponent extends VComponent> = (
   ctx: CanvasRenderingContext2D,
-  node: TVNode
+  node: TVComponent
 ) => void;
 
 export type Registerer = (type: string, renderer: Renderer<any>) => void;

@@ -1,20 +1,13 @@
-import { VNode } from '../@types/VNode';
-import { Registerer, Renderer } from '../@types/Registerer';
+import * as Circle from './Circle';
+import * as Line from './Line';
+import * as Tile from './Tile';
+import * as Container from './Container';
+import * as Wrapper from './Wrapper';
 
-export const renderers: Record<string, Renderer<VNode>> = {};
-
-const registerRenderer: Registerer = (type, renderer) => {
-  renderers[type] = renderer;
+export const primitiveMap = <const>{
+  [Circle.type]: Circle,
+  [Line.type]: Line,
+  [Tile.type]: Tile,
+  [Container.type]: Container,
+  [Wrapper.type]: Wrapper,
 };
-
-import { circleFactory } from './Circle/renderer';
-circleFactory(registerRenderer);
-
-import { lineFactory } from './Line/renderer';
-lineFactory(registerRenderer);
-
-import { tileFactory } from './Tile/renderer';
-tileFactory(registerRenderer);
-
-import { wrapperFactory } from './Wrapper/renderer';
-wrapperFactory(registerRenderer);
