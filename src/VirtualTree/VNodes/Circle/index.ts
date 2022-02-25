@@ -52,7 +52,6 @@ export const getBoundingRect: GetBoundingRect<VCircle> = ({ position, radius }) 
 }
 
 export const render: Render<VCircle> = (ctx, node) => {
-  console.log(node);
   ctx.save();
   ctx.beginPath();
   ctx.arc(node.position.x, node.position.y, node.radius, 0, 360);
