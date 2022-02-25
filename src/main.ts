@@ -5,7 +5,8 @@ import { App } from './composits/App';
 import './style.css';
 
 const getRootCanvas = (selector: string): [HTMLCanvasElement, CanvasRenderingContext2D] => {
-  const app = document.querySelector<HTMLDivElement>('#app')!;
+  const app = document.querySelector<HTMLDivElement>(selector);
+  if (app === null) throw new Error('Selector is incorrect');
 
   const canvas = document.createElement('canvas');
   canvas.setAttribute('id', 'scene');
@@ -15,7 +16,7 @@ const getRootCanvas = (selector: string): [HTMLCanvasElement, CanvasRenderingCon
   app.appendChild(canvas);
 
   const ctx = canvas.getContext('2d');
-  if (ctx == null) throw new Error('WTF? CTX is null');
+  if (ctx === null) throw new Error('Canvas 2d context is null');
 
   ctx.imageSmoothingEnabled = false;
 

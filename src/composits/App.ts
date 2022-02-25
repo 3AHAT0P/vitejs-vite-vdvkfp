@@ -7,7 +7,7 @@ import { ShortLines } from './ShortLines';
 
 
 export const App = () => {
-  const containerOptions = <const>{
+  const containerOptions: Container.ContainerOptions = {
     position: { type: 'absolute', x: 32, y: 32 },
     size: { x: 400, y: 400 },
     border: {
